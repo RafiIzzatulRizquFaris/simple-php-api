@@ -4,10 +4,14 @@ $request_method = $_SERVER['REQUEST_METHOD'];
 $connection = openConn();
 switch ($request_method) {
     case 'GET':
-        if (!empty($_GET['id'])) {
-            getEmployee($connection, intval($_GET['id']));
-        } else {
-            getEmployee($connection);
+        if ($_GET['action'] == "employee") {
+            if (!empty($_GET['id'])) {
+                getEmployee($connection, intval($_GET['id']));
+            } else {
+                getEmployee($connection);
+            }
+        }else{
+            getRole($connection);
         }
         break;
 
@@ -26,6 +30,17 @@ switch ($request_method) {
     default:
         header("Method not allowed");
         break;
+}
+
+function getRole($connection){
+    $query = "SELECT * FROM role";
+    $response = array();
+    $result = mysqli_query($connection, $query);
+    while ($row = mysqli_fetch_array($result)) {
+        $response[] = $row;
+    }
+    header('json app');
+    echo json_encode($response);
 }
 
 function getEmployee($connection, $id = 0)
