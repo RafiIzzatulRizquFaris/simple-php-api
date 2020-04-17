@@ -36,7 +36,7 @@ function getRole($connection){
     $query = "SELECT * FROM role";
     $response = array();
     $result = mysqli_query($connection, $query);
-    while ($row = mysqli_fetch_array($result)) {
+    while ($row = mysqli_fetch_assoc($result)) {
         $response[] = $row;
     }
     header('json app');
@@ -53,7 +53,7 @@ function getEmployee($connection, $id = 0)
 
     $response = array();
     $result = mysqli_query($connection, $query);
-    while ($row = mysqli_fetch_array($result)) {
+    while ($row = mysqli_fetch_assoc($result)) {
         $response[] = $row;
     }
     header('json app');
